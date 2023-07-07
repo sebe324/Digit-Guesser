@@ -1,7 +1,8 @@
 # Digit-Guesser
 A multilayer perceptron that can detect single digits.
 
-
+## Project status
+Not usable. It's in the early stages.
 ## How to use
 
 Draw a digit on the drawing board, then press the start button.
