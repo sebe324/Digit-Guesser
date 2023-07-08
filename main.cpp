@@ -4,7 +4,7 @@
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(1000, 800), "Number Guesser");
+	sf::RenderWindow window(sf::VideoMode(1200, 800), "Number Guesser");
 	window.setFramerateLimit(60);
 
 	DrawingBoard drawingBoard(28, 28, 15, 200, 200);

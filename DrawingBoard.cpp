@@ -20,6 +20,11 @@ valuesWidth(valuesWidth), valuesHeight(valuesHeight), cellEdgeSize(cellEdgeSize)
 	border.setSize(sf::Vector2f(valuesWidth * cellEdgeSize, valuesHeight * cellEdgeSize));
 	border.setOutlineColor(sf::Color(120,120,120));
 	border.setOutlineThickness(5.f);
+
+	highlight.setSize(sf::Vector2f(brushSize*cellEdgeSize,brushSize*cellEdgeSize));
+	highlight.setOutlineColor(sf::Color::Yellow);
+
+	drawingBoardBounds = sf::FloatRect(position.x,position.y,position.x+cellEdgeSize*valuesWidth,cellEdgeSize*valuesHeight);
 }
 
 void DrawingBoard::updateCells()
@@ -35,9 +40,9 @@ void DrawingBoard::updateCells()
 	//2 - bottom right corner
 	//3 - bottom left corner
 
-	for (int row = 0; row < valuesHeight; row++)
+	for (unsigned row = 0; row < valuesHeight; row++)
 	{
-		for (int col = 0; col < valuesWidth; col++)
+		for (unsigned col = 0; col < valuesWidth; col++)
 		{
 			cells[(row * valuesWidth + col)*4 + 0].position = sf::Vector2f(col*cellEdgeSize,row*cellEdgeSize)+position;
 			cells[(row * valuesWidth + col)*4 + 1].position = sf::Vector2f(col*cellEdgeSize+cellEdgeSize,row*cellEdgeSize)+position;
@@ -48,12 +53,25 @@ void DrawingBoard::updateCells()
 }
 void DrawingBoard::hover(sf::Vector2f mousePos)
 {
-
+	isHovered = drawingBoardBounds.contains(mousePos);
 }
 
 void DrawingBoard::click(sf::Vector2f mousePos)
 {
+	
+	if (drawingBoardBounds.contains(mousePos)) {
+		int row = Utils::clamp<int>(0, valuesHeight, (mousePos.y - position.y) / valuesHeight);
+		int col = Utils::clamp<int>(0, valuesWidth, (mousePos.x - position.x) / valuesWidth);
+		if (mode == WRITE) {
+			//Add values
 
+			
+		}
+		else {
+			//remove values
+		}
+		updateCells();
+	}
 }
 
 void DrawingBoard::draw(sf::RenderTarget& target, sf::RenderStates states) const

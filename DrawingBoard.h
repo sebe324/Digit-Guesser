@@ -2,7 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <vector>
-
+#include "Utils.h"
 //Drawing board that let's the user draw the digit.
 
 enum Mode
@@ -21,6 +21,9 @@ class DrawingBoard : public sf::Drawable
 
 	const float cellEdgeSize; //edge size for values to draw.
 
+	
+	sf::FloatRect drawingBoardBounds;
+
 	unsigned cellsAmount;
 
 	sf::Color cellColor = sf::Color::White;
@@ -28,6 +31,10 @@ class DrawingBoard : public sf::Drawable
 	sf::RectangleShape border; //Border for the drawing board.
 
 	sf::Vector2f position;
+
+	sf::RectangleShape highlight;
+	
+	bool isHovered = false;
 public:
 
 	Mode mode=WRITE;
