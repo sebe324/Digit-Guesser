@@ -24,3 +24,5 @@ In the result section, the network will output (hopefully) the drawn digit.
   - Network learning :x:
 ## Other
 This project was inspired by 3b1b's [playlist](https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi) on neural network's. 
+
+Font used: [Highland Gothic](https://www.1001freefonts.com/highland-gothic.font)

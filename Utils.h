@@ -1,6 +1,5 @@
 #pragma once
 
 namespace Utils {
-	template<class T>
-	T clamp(T min, T max, T value);
+	int clamp(int min, int max, int value);
 }

@@ -38,18 +38,18 @@ class DrawingBoard : public sf::Drawable
 public:
 
 	Mode mode=WRITE;
-	unsigned char brushSize=1;
-	std::vector<unsigned char> values; //Values in gray scale from 0 to 255.
+	unsigned char brushSize=3;
+	std::vector<unsigned int> values; //Values in gray scale from 0 to 255.
 
 	sf::VertexArray cells; //Vertex array used to represent the values vector on the screen.
 
 	DrawingBoard(unsigned valuesWidth, unsigned valuesHeight, float cellEdgeSize, float positionX, float positionY);
 
 	//If mouse hovers over the drawing board, the affected cells will be highlighted.
-	void hover(sf::Vector2f mousePos); 
+	void hover(const sf::Vector2f& mousePos); 
 
 	//If user clicks then the highlighted cells will be coloured or cleared.
-	void click(sf::Vector2f mousePos);
+	void click(const sf::Vector2f& mousePos);
 
 	void updateCells();
 

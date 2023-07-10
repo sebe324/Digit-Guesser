@@ -1,5 +1,5 @@
 #include "DrawingBoard.h"
-
+#include <iostream>
 sf::Color operator* (const sf::Color& left, float n)
 {
 	return sf::Color(left.r * n, left.g * n, left.b * n, left.a * n);
@@ -31,7 +31,7 @@ void DrawingBoard::updateCells()
 {
 	//set the color
 	for (int i = 0; i < values.size(); i++)
-		for (int j = 0; j < 4; j++) cells[i * 4 + j].color = cellColor*(values[i]/255);
+		for (int j = 0; j < 4; j++) cells[i * 4 + j].color = cellColor*(float(values[i])/255);
 
 	//Set correct position of cells
 	//This may be a little confusing. Each cell has 4 corners. The loop iterates through all corners and sets their positions.
@@ -51,24 +51,30 @@ void DrawingBoard::updateCells()
 		}
 	}
 }
-void DrawingBoard::hover(sf::Vector2f mousePos)
+void DrawingBoard::hover(const sf::Vector2f& mousePos)
 {
 	isHovered = drawingBoardBounds.contains(mousePos);
 }
 
-void DrawingBoard::click(sf::Vector2f mousePos)
+void DrawingBoard::click(const sf::Vector2f& mousePos)
 {
 	
 	if (drawingBoardBounds.contains(mousePos)) {
-		int row = Utils::clamp<int>(0, valuesHeight, (mousePos.y - position.y) / valuesHeight);
-		int col = Utils::clamp<int>(0, valuesWidth, (mousePos.x - position.x) / valuesWidth);
-		if (mode == WRITE) {
-			//Add values
+		int row = Utils::clamp(0, valuesHeight, (mousePos.y - position.y) / cellEdgeSize);
+		int col = Utils::clamp(0, valuesWidth, (mousePos.x - position.x) / cellEdgeSize);
+		switch (mode)
+		{
+			case WRITE:
+				for (int i = 0; i < brushSize; i++) {
+					for (int j = 0; j < brushSize; j++) {
+						if(row+i<valuesHeight && col+j<valuesWidth)
+						values[(row + i) * valuesWidth + col + j] = Utils::clamp(0, 255, values[(row + i) * valuesWidth + col + j] + 100);
+					}
+				}
+			break;
+			case ERASE:
 
-			
-		}
-		else {
-			//remove values
+			break;
 		}
 		updateCells();
 	}
