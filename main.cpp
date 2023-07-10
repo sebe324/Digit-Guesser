@@ -45,6 +45,12 @@ int main()
 	buttonBrushSizeInc.body.setOutlineColor(sf::Color::White);
 	buttonBrushSizeDec.body.setOutlineThickness(2);
 	buttonBrushSizeDec.body.setOutlineColor(sf::Color::White);
+
+	Button buttonStartPerceptron("START", 40, sf::Color::White, sf::Vector2f(0, 0), sf::Vector2f(200, 50), sf::Color::Black, font);
+	buttonStartPerceptron.hoverBodyColor = sf::Color(50, 50, 50);
+
+	Button buttonClearBoard("Clear", 40, sf::Color::White, sf::Vector2f(0, 0), sf::Vector2f(200, 50), sf::Color::Black, font);
+	buttonClearBoard.hoverBodyColor = sf::Color(50, 50, 50);
 	sf::Clock clock;
 	sf::Time deltaTime = sf::seconds(0.016);
 	while (window.isOpen())
@@ -65,13 +71,11 @@ int main()
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 				drawingBoard.click(mousePos);
 				if (buttonBrushSizeDec.click(mousePos)) {
-					drawingBoard.brushSize--;
-					drawingBoard.brushSize = Utils::clamp(1, 5, drawingBoard.brushSize);
+					drawingBoard.changeBrushSize(drawingBoard.brushSize - 1);
 					brushSizeValue.setString(std::to_string(drawingBoard.brushSize));
 				}
 				else if(buttonBrushSizeInc.click(mousePos)) {
-					drawingBoard.brushSize++;
-					drawingBoard.brushSize = Utils::clamp(1, 5, drawingBoard.brushSize);
+					drawingBoard.changeBrushSize(drawingBoard.brushSize + 1);
 					brushSizeValue.setString(std::to_string(drawingBoard.brushSize));
 				}
 			}
@@ -84,6 +88,7 @@ int main()
 		window.draw(drawingBoard);
 		window.draw(buttonBrushSizeInc);
 		window.draw(buttonBrushSizeDec);
+		window.draw(buttonStartPerceptron);
 		window.draw(title);
 		window.draw(brushSizeLabel);
 		window.draw(brushSizeValue);

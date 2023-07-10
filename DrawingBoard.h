@@ -53,6 +53,10 @@ public:
 
 	void updateCells();
 
+	void changeBrushSize(unsigned n);
+
+	void changeMode(Mode m);
+
 private:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };

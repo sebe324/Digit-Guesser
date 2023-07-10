@@ -23,7 +23,8 @@ valuesWidth(valuesWidth), valuesHeight(valuesHeight), cellEdgeSize(cellEdgeSize)
 
 	highlight.setSize(sf::Vector2f(brushSize*cellEdgeSize,brushSize*cellEdgeSize));
 	highlight.setOutlineColor(sf::Color::Yellow);
-
+	highlight.setOutlineThickness(2);
+	highlight.setFillColor(sf::Color::Transparent);
 	drawingBoardBounds = sf::FloatRect(position.x,position.y,position.x+cellEdgeSize*valuesWidth,cellEdgeSize*valuesHeight);
 }
 
@@ -54,6 +55,7 @@ void DrawingBoard::updateCells()
 void DrawingBoard::hover(const sf::Vector2f& mousePos)
 {
 	isHovered = drawingBoardBounds.contains(mousePos);
+	highlight.setPosition(mousePos);
 }
 
 void DrawingBoard::click(const sf::Vector2f& mousePos)
@@ -80,8 +82,29 @@ void DrawingBoard::click(const sf::Vector2f& mousePos)
 	}
 }
 
+void DrawingBoard::changeBrushSize(unsigned n)
+{
+	brushSize = Utils::clamp(0,6,n);
+	highlight.setSize(sf::Vector2f(brushSize * cellEdgeSize, brushSize * cellEdgeSize));
+}
+
+void DrawingBoard::changeMode(Mode m)
+{
+	mode = m;
+	switch (mode)
+	{
+	case WRITE:
+		highlight.setOutlineColor(sf::Color::Yellow);
+	break;
+	case ERASE:
+		highlight.setOutlineColor(sf::Color::Red);
+	break;
+	}
+}
 void DrawingBoard::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	target.draw(cells);
 	target.draw(border);
+	if (isHovered)
+		target.draw(highlight);
 }
