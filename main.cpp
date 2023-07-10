@@ -12,7 +12,7 @@ int main()
 	window.setFramerateLimit(60);
 
 
-	DrawingBoard drawingBoard(28, 28, 15,200, 200);
+	DrawingBoard drawingBoard(28, 28, 15,150, 200);
 	drawingBoard.updateCells();
 	sf::Vector2f mousePos;
 
@@ -30,15 +30,15 @@ int main()
 	brushSizeLabel.setFont(font);
 	brushSizeLabel.setFillColor(sf::Color::White);
 	brushSizeLabel.setString("Brush Size: ");
-	brushSizeLabel.setPosition(sf::Vector2f(200,650));
+	brushSizeLabel.setPosition(sf::Vector2f(150,650));
 
 	sf::Text brushSizeValue;
 	brushSizeValue.setFont(font);
 	brushSizeValue.setFillColor(sf::Color::White);
 	brushSizeValue.setString(std::to_string(drawingBoard.brushSize));
-	brushSizeValue.setPosition(sf::Vector2f(524,650));
-	Button buttonBrushSizeInc("+", 40, sf::Color::White, sf::Vector2f(434, 650), sf::Vector2f(50, 50), sf::Color::Black, font);
-	Button buttonBrushSizeDec("-", 40, sf::Color::White, sf::Vector2f(574, 650), sf::Vector2f(50, 50), sf::Color::Black, font);
+	brushSizeValue.setPosition(sf::Vector2f(484,650));
+	Button buttonBrushSizeInc("+", 40, sf::Color::White, sf::Vector2f(384, 650), sf::Vector2f(50, 50), sf::Color::Black, font);
+	Button buttonBrushSizeDec("-", 40, sf::Color::White, sf::Vector2f(524, 650), sf::Vector2f(50, 50), sf::Color::Black, font);
 	buttonBrushSizeInc.hoverBodyColor = sf::Color(50, 50, 50);
 	buttonBrushSizeDec.hoverBodyColor = sf::Color(50, 50, 50);
 	buttonBrushSizeInc.body.setOutlineThickness(2);
@@ -46,7 +46,7 @@ int main()
 	buttonBrushSizeDec.body.setOutlineThickness(2);
 	buttonBrushSizeDec.body.setOutlineColor(sf::Color::White);
 
-	Button buttonStartPerceptron("START", 40, sf::Color::White, sf::Vector2f(0, 0), sf::Vector2f(200, 50), sf::Color::Black, font);
+	Button buttonStartPerceptron("START", 40, sf::Color::White, sf::Vector2f(640, 320), sf::Vector2f(200, 50), sf::Color::Black, font);
 	buttonStartPerceptron.hoverBodyColor = sf::Color(50, 50, 50);
 
 	Button buttonClearBoard("Clear", 40, sf::Color::White, sf::Vector2f(0, 0), sf::Vector2f(200, 50), sf::Color::Black, font);

@@ -25,7 +25,7 @@ valuesWidth(valuesWidth), valuesHeight(valuesHeight), cellEdgeSize(cellEdgeSize)
 	highlight.setOutlineColor(sf::Color::Yellow);
 	highlight.setOutlineThickness(2);
 	highlight.setFillColor(sf::Color::Transparent);
-	drawingBoardBounds = sf::FloatRect(position.x,position.y,position.x+cellEdgeSize*valuesWidth,cellEdgeSize*valuesHeight);
+	drawingBoardBounds = sf::FloatRect(position.x,position.y,cellEdgeSize*valuesWidth,cellEdgeSize*valuesHeight);
 }
 
 void DrawingBoard::updateCells()
