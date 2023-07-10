@@ -21,6 +21,7 @@ Button::Button(std::string text, int charSize, sf::Color contentColor, sf::Vecto
     content.setCharacterSize(charSize);
 
     content.setPosition(body.getPosition().x + (body.getSize().x) / 2 - (content.getGlobalBounds().width / 2), body.getPosition().y);
+    coolDown = sf::seconds(0.1);
 }
 
 bool Button::contains(sf::Vector2f pos) {
@@ -31,10 +32,14 @@ bool Button::contains(sf::Vector2f pos) {
 }
 
 bool Button::click(sf::Vector2f pos) {
-    if (contains(pos) && sf::Mouse::isButtonPressed(sf::Mouse::Left)) return true;
+    if (contains(pos) && sf::Mouse::isButtonPressed(sf::Mouse::Left) && timer <= sf::Time::Zero) {
+        timer = coolDown;
+        return true;
+
+    }
     else return false;
 }
-void Button::update(sf::Vector2f pos) {
+void Button::update(sf::Vector2f pos,const sf::Time& dt) {
     if (click(pos)) {
         body.setFillColor(activeBodyColor);
         content.setFillColor(activeContentColor);
@@ -47,6 +52,7 @@ void Button::update(sf::Vector2f pos) {
         body.setFillColor(originalBodyColor);
         content.setFillColor(originalContentColor);
     }
+    timer -= dt;
 }
 
 void Button::draw(sf::RenderTarget& target, sf::RenderStates states) const {

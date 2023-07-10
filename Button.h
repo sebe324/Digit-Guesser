@@ -14,9 +14,12 @@ public:
 
     sf::Color activeBodyColor;
     sf::Color activeContentColor;
+
+    sf::Time coolDown;
+    sf::Time timer=sf::Time::Zero;
     bool contains(sf::Vector2f pos);
     bool click(sf::Vector2f pos);
-    void update(sf::Vector2f pos);
+    void update(sf::Vector2f pos, const sf::Time& dt);
     Button();
     Button(std::string text, int charSize, sf::Color contentColor, sf::Vector2f bPos, sf::Vector2f bSize, sf::Color bodyColor, sf::Font& font);
 private:
