@@ -15,7 +15,7 @@ In the result section, the network will output (hopefully) the drawn digit.
   - Drawing board 🛠️
   - Buttons 🛠️
   - Eraser :x:
-  - Brush sizes :x:
+  - Brush sizes ✔️
   - Output section :x:
   - Progress bars :x:
 - Neural Network :x:
