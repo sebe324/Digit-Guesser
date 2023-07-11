@@ -12,9 +12,9 @@ In the result section, the network will output (hopefully) the drawn digit.
 ## To do list
 
 - User Interface 🛠️
-  - Drawing board 🛠️
-  - Buttons 🛠️
-  - Eraser :x:
+  - Drawing board ✔️
+  - Buttons ✔️
+  - Eraser ✔️
   - Brush sizes ✔️
   - Output section :x:
   - Progress bars :x:
@@ -26,3 +26,6 @@ In the result section, the network will output (hopefully) the drawn digit.
 This project was inspired by 3b1b's [playlist](https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi) on neural network's. 
 
 Font used: [Highland Gothic](https://www.1001freefonts.com/highland-gothic.font)
+Icons I used:
+ - Rubber icon: [Link](https://www.flaticon.com/free-icons/rubber)
+ - Pencil icon: [Link](https://www.flaticon.com/free-icons/edit)

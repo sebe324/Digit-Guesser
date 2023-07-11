@@ -75,7 +75,12 @@ void DrawingBoard::click(const sf::Vector2f& mousePos)
 				}
 			break;
 			case ERASE:
-
+				for (int i = 0; i < brushSize; i++) {
+					for (int j = 0; j < brushSize; j++) {
+						if (row + i < valuesHeight && col + j < valuesWidth)
+							values[(row + i) * valuesWidth + col + j] = 0;
+					}
+				}
 			break;
 		}
 		updateCells();
@@ -84,7 +89,7 @@ void DrawingBoard::click(const sf::Vector2f& mousePos)
 
 void DrawingBoard::changeBrushSize(unsigned n)
 {
-	brushSize = Utils::clamp(0,6,n);
+	brushSize = Utils::clamp(1,6,n);
 	highlight.setSize(sf::Vector2f(brushSize * cellEdgeSize, brushSize * cellEdgeSize));
 }
 
@@ -100,6 +105,12 @@ void DrawingBoard::changeMode(Mode m)
 		highlight.setOutlineColor(sf::Color::Red);
 	break;
 	}
+}
+
+void DrawingBoard::clear()
+{
+	for (unsigned& x : values) x = 0;
+	updateCells();
 }
 void DrawingBoard::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {

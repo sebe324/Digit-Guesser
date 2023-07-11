@@ -43,19 +43,34 @@ void Button::update(sf::Vector2f pos,const sf::Time& dt) {
     if (click(pos)) {
         body.setFillColor(activeBodyColor);
         content.setFillColor(activeContentColor);
+       // sprite.setColor(activeContentColor);
     }
     else if (contains(pos)) {
         body.setFillColor(hoverBodyColor);
         content.setFillColor(hoverContentColor);
+        //sprite.setColor(hoverContentColor);
     }
     else {
         body.setFillColor(originalBodyColor);
         content.setFillColor(originalContentColor);
+        //sprite.setColor(originalContentColor);
     }
     timer -= dt;
 }
 
+void Button::setSprite(std::string filePath, sf::Vector2f scale){
+    if (!texture.loadFromFile(filePath)) {
+        std::cout << "FAILED TO LOAD TEXTURE"<<std::endl;
+    }
+    sprite.setTexture(texture);
+    sprite.setScale(scale);
+    sf::FloatRect s_rect = sprite.getGlobalBounds();
+    sprite.setPosition(body.getPosition().x+(body.getSize().x - s_rect.width) / 2, body.getPosition().y + (body.getSize().y - s_rect.height)/2);
+    sprite.setColor(originalContentColor);
+
+}
 void Button::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     target.draw(body);
     target.draw(content);
+    target.draw(sprite);
 }
