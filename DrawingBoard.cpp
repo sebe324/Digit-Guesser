@@ -119,3 +119,12 @@ void DrawingBoard::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	if (isHovered)
 		target.draw(highlight);
 }
+
+std::vector<double> DrawingBoard::getValuesFrom0To1()
+{
+	std::vector<double> result(values.size());
+	for (int i = 0; i < values.size(); i++) {
+		result[i] = values[i] / 255.0;
+	}
+	return result;
+}

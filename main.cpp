@@ -3,9 +3,12 @@
 #include "DrawingBoard.h"
 #include "Button.h"
 #include <string>
-
+#include "NeuralNetwork.h"
+#include <ctime>
 int main()
 {
+	srand(time(NULL));
+
 	const int windowWidth=1200;
 	const int windowHeight=800;
 	sf::ContextSettings settings(0,0,4);
@@ -36,7 +39,7 @@ int main()
 	brushSizeValue.setFont(font);
 	brushSizeValue.setFillColor(sf::Color::White);
 	brushSizeValue.setString(std::to_string(drawingBoard.brushSize));
-	brushSizeValue.setPosition(sf::Vector2f(474,650));
+	brushSizeValue.setPosition(sf::Vector2f(470,650));
 	Button buttonBrushSizeInc("+", 40, sf::Color::White, sf::Vector2f(384, 650), sf::Vector2f(50, 50), sf::Color::Black, font);
 	Button buttonBrushSizeDec("-", 40, sf::Color::White, sf::Vector2f(524, 650), sf::Vector2f(50, 50), sf::Color::Black, font);
 	buttonBrushSizeInc.hoverBodyColor = sf::Color(50, 50, 50);
@@ -69,6 +72,10 @@ int main()
 	buttonEraseMode.hoverBodyColor = sf::Color(50, 50, 50);
 	sf::Clock clock;
 	sf::Time deltaTime = sf::seconds(0.016);
+
+	NeuralNetwork perceptron(784, 16, 16, 10);
+	perceptron.randomize();
+
 	while (window.isOpen())
 	{
 		sf::Event event;
@@ -102,6 +109,11 @@ int main()
 				}
 				else if (buttonClearBoard.click(mousePos)) {
 					drawingBoard.clear();
+				}
+				else if (buttonStartPerceptron.click(mousePos)) {
+					perceptron.loadInput(drawingBoard.getValuesFrom0To1());
+					std::cout<<"Cost: "<<perceptron.calculateCost(1) << std::endl;
+					for (auto& x : perceptron.outputLayerValues) std::cout << x << std::endl;
 				}
 			}
 		}

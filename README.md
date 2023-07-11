@@ -18,7 +18,9 @@ In the result section, the network will output (hopefully) the drawn digit.
   - Brush sizes ✔️
   - Output section :x:
   - Progress bars :x:
-- Neural Network :x:
+- Neural Network 🛠️
+  - Calculating all the weights, values and biases 🛠️
+  - Setting random values to each weight :x:
   - Loading learning data from images :x:
   - Loading and saving weights to a csv file :x:
   - Network learning :x:
