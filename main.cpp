@@ -81,6 +81,7 @@ int main()
 	NeuralNetwork perceptron(784, 16, 16, 10);
 	perceptron.randomize();
 
+	perceptron.saveWeightsAndBiases("weights2.csv", "weights3.csv", "weights4.csv", "biases2.csv","biases3.csv","biases4.csv");
 	while (window.isOpen())
 	{
 		sf::Event event;
@@ -118,7 +119,6 @@ int main()
 				else if (buttonStartPerceptron.click(mousePos)) {
 					perceptron.loadInput(drawingBoard.getValuesFrom0To1());
 					perceptron.launchNetwork();
-
 					for (int i = 0; i < progressBars.size(); i++) progressBars[i].setValue(perceptron.outputLayerValues[i]);
 				}
 			}

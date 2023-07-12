@@ -30,9 +30,9 @@ public:
 
 	void loadImage(const std::string& fileName);
 
-	void loadWeights(const std::string& f1, const std::string& f2, const std::string& f3);
+	void loadWeightsAndBiases(const std::string& f1w, const std::string& f2w, const std::string& f3w, const std::string& f1b, const std::string& f2b, const std::string& f3b);
 
-	void saveWeights(const std::string& f1, const std::string& f2, const std::string& f3);
+	void saveWeightsAndBiases(const std::string& f1w, const std::string& f2w, const std::string& f3w, const std::string& f1b, const std::string& f2b, const std::string& f3b);
 
 	//randomizes weights and biases
 	void randomize();

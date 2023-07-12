@@ -97,3 +97,52 @@ void NeuralNetwork::randomize()
 	}
 
 }
+
+void NeuralNetwork::loadWeightsAndBiases
+(const std::string& f1w, const std::string& f2w, const std::string& f3w, const std::string& f1b, const std::string& f2b, const std::string& f3b)
+{
+
+}
+
+void NeuralNetwork::saveWeightsAndBiases
+(const std::string& f1w, const std::string& f2w, const std::string& f3w, const std::string& f1b, const std::string& f2b, const std::string& f3b)
+{
+	std::ofstream file1Weights(f1w);
+	std::ofstream file2Weights(f2w);
+	std::ofstream file3Weights(f3w);
+
+	std::ofstream file1Biases(f1b);
+	std::ofstream file2Biases(f2b);
+	std::ofstream file3Biases(f3b);
+
+	for (int i = 0; i < secondLayerValues.size(); i++) {
+		for (int j = 0; j < inputLayerValues.size(); j++) {
+			file1Weights << std::to_string(secondLayerWeights[i][j])<<",";
+		}
+		file1Weights << "\n";
+		file1Biases << std::to_string(secondLayerBias[i]) << ",";
+	}
+
+	for (int i = 0; i < thirdLayerValues.size(); i++) {
+		for (int j = 0; j < secondLayerValues.size(); j++) {
+			file2Weights << std::to_string(thirdLayerWeights[i][j]) << ",";
+		}
+		file2Weights << "\n";
+		file2Biases << std::to_string(thirdLayerBias[i]) << ",";
+	}
+
+	for (int i = 0; i < outputLayerValues.size(); i++) {
+		for (int j = 0; j < thirdLayerValues.size(); j++) {
+			file3Weights << std::to_string(outputLayerWeights[i][j]) << ",";
+		}
+		file3Weights << "\n";
+		file3Biases << std::to_string(outputLayerBias[i]) << ",";
+	}
+	file1Weights.close();
+	file2Weights.close();
+	file3Weights.close();
+
+	file1Biases.close();
+	file2Biases.close();
+	file3Biases.close();
+}
