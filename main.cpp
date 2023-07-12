@@ -79,14 +79,10 @@ int main()
 	sf::Time deltaTime = sf::seconds(0.016);
 
 	NeuralNetwork perceptron(784, 16, 16, 10);
-	//perceptron.randomize();
-	//perceptron.saveWeightsAndBiases("weights2.csv", "weights3.csv", "weights4.csv", "biases2.csv","biases3.csv","biases4.csv");
+	perceptron.randomize();
+	perceptron.saveWeightsAndBiases("weights2.csv", "weights3.csv", "weights4.csv", "biases2.csv","biases3.csv","biases4.csv");
 
-	std::cout << perceptron.thirdLayerWeights[15][0]<<std::endl;
-	std::cout << perceptron.secondLayerBias[15] << std::endl;
 	perceptron.loadWeightsAndBiases("weights2.csv", "weights3.csv", "weights4.csv", "biases2.csv", "biases3.csv", "biases4.csv");
-	std::cout << perceptron.thirdLayerWeights[15][0] << std::endl;
-	std::cout << perceptron.secondLayerBias[15] << std::endl;
 	while (window.isOpen())
 	{
 		sf::Event event;

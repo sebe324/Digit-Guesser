@@ -18,6 +18,10 @@ In the result section, the network will output (hopefully) the drawn digit.
 
 ## To do list
 
+✔️ - Completed
+:x: - Uncompleted
+🛠️ - Working on it
+
 - User Interface ✔️
   - Drawing board ✔️
   - Buttons ✔️
@@ -28,7 +32,7 @@ In the result section, the network will output (hopefully) the drawn digit.
 - Neural Network 🛠️
   - Calculating all the weights, values and biases 🛠️
   - Setting random values to each weight ✔️
-  - Loading learning data from images :x:
+  - Loading learning data from images 🛠️
   - Loading and saving weights to a csv file ✔️
   - Network learning :x:
 - Misc 🛠️

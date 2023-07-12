@@ -207,3 +207,8 @@ void NeuralNetwork::saveWeightsAndBiases
 	file2Biases.close();
 	file3Biases.close();
 }
+
+void NeuralNetwork::loadImage(const std::string& fileName)
+{
+
+}
