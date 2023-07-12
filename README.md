@@ -2,8 +2,8 @@
 A multilayer perceptron that can detect single digits.
 
 ## Preview (Network is still untrained)
+![Image](https://github.com/sebe324/Digit-Guesser/assets/58781463/1bf342fd-fd67-4314-a171-7fd03f970b7f)
 
-![Image](https://github.com/sebe324/Digit-Guesser/assets/58781463/5fb8dcb4-703d-4c69-90ae-068dd668a903)
 
 
 ## Project status
