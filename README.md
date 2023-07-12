@@ -1,11 +1,17 @@
 # Digit-Guesser
 A multilayer perceptron that can detect single digits.
 
+## Preview (Network is still untrained)
+
+![Image](https://github.com/sebe324/Digit-Guesser/assets/58781463/5fb8dcb4-703d-4c69-90ae-068dd668a903)
+
+
 ## Project status
 Not usable. It's in the early stages.
 ## How to use
 
-Draw a digit on the drawing board, then press the start button.
+Draw any digit on the drawing board.
+Press the start button.
 The network then should detect the number.
 In the result section, the network will output (hopefully) the drawn digit.
 
