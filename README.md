@@ -38,10 +38,11 @@ In the result section, the network will output (hopefully) the drawn digit.
 
 ## How to build
 	
-	- Clone the source code.
-	- Create a new project and add the cloned source code.
-	- Add [SFML](https://www.sfml-dev.org/tutorials/2.6/) to your project.
-	- Build.
+- Clone the source code.
+- Create a new project and add the cloned source code.
+- Add [SFML](https://www.sfml-dev.org/tutorials/2.6/) to your project.
+- Build.
+
 ## Other
 This project was inspired by 3b1b's [playlist](https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi) on neural network's. 
 
