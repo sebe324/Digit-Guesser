@@ -101,7 +101,57 @@ void NeuralNetwork::randomize()
 void NeuralNetwork::loadWeightsAndBiases
 (const std::string& f1w, const std::string& f2w, const std::string& f3w, const std::string& f1b, const std::string& f2b, const std::string& f3b)
 {
+	std::ifstream file1Weights(f1w);
+	std::ifstream file2Weights(f2w);
+	std::ifstream file3Weights(f3w);
 
+	std::ifstream file1Biases(f1b);
+	std::ifstream file2Biases(f2b);
+	std::ifstream file3Biases(f3b);
+
+	std::string line;
+	int i = 0;
+	int j = 0;
+
+	int count = 0;
+	//Load weights
+	for (int i = 0; i < secondLayerValues.size(); i++) {
+		std::getline(file1Weights, line);
+		std::vector<std::string> temp=Utils::split(line,',');
+		for (int j = 0; j < inputLayerValues.size(); j++) {
+			secondLayerWeights[i][j]=std::stod(temp[j]);
+		}
+	}
+	for (int i = 0; i < thirdLayerValues.size(); i++) {
+		std::getline(file2Weights, line);
+		std::vector<std::string> temp = Utils::split(line, ',');
+		for (int j = 0; j < secondLayerValues.size(); j++) {
+			thirdLayerWeights[i][j] = std::stod(temp[j]);
+		}
+	}
+	for (int i = 0; i < outputLayerValues.size(); i++) {
+		std::getline(file3Weights, line);
+		std::vector<std::string> temp = Utils::split(line, ',');
+		for (int j = 0; j < thirdLayerValues.size(); j++) {
+			outputLayerWeights[i][j] = std::stod(temp[j]);
+		}
+	}
+	//load biases
+	i = 0;
+	while (std::getline(file1Biases, line, ',')) secondLayerBias[i++] = std::stod(line);
+	i = 0;
+	while (std::getline(file2Biases, line, ',')) thirdLayerBias[i++] = std::stod(line);
+	i = 0;
+	while (std::getline(file3Biases, line, ',')) outputLayerBias[i++] = std::stod(line);
+	
+	
+	file1Weights.close();
+	file2Weights.close();
+	file3Weights.close();
+
+	file1Biases.close();
+	file2Biases.close();
+	file3Biases.close();
 }
 
 void NeuralNetwork::saveWeightsAndBiases
@@ -115,28 +165,39 @@ void NeuralNetwork::saveWeightsAndBiases
 	std::ofstream file2Biases(f2b);
 	std::ofstream file3Biases(f3b);
 
+	int count = 0;
+
 	for (int i = 0; i < secondLayerValues.size(); i++) {
 		for (int j = 0; j < inputLayerValues.size(); j++) {
-			file1Weights << std::to_string(secondLayerWeights[i][j])<<",";
+			file1Weights << std::to_string(secondLayerWeights[i][j]);
+			if (j < inputLayerValues.size() - 1) file1Weights<<",";
+			count++;
 		}
 		file1Weights << "\n";
-		file1Biases << std::to_string(secondLayerBias[i]) << ",";
+		file1Biases << std::to_string(secondLayerBias[i]);
+		if (i < secondLayerValues.size() - 1) file1Biases << ",";
 	}
 
+	std::cout << "TEST: " << count << std::endl;
 	for (int i = 0; i < thirdLayerValues.size(); i++) {
 		for (int j = 0; j < secondLayerValues.size(); j++) {
-			file2Weights << std::to_string(thirdLayerWeights[i][j]) << ",";
+			file2Weights << std::to_string(thirdLayerWeights[i][j]);
+			if (j < secondLayerValues.size() - 1) file2Weights << ",";
 		}
 		file2Weights << "\n";
-		file2Biases << std::to_string(thirdLayerBias[i]) << ",";
+		file2Biases << std::to_string(thirdLayerBias[i]);
+		if (i < thirdLayerValues.size() - 1) file2Biases << ",";
 	}
+
 
 	for (int i = 0; i < outputLayerValues.size(); i++) {
 		for (int j = 0; j < thirdLayerValues.size(); j++) {
-			file3Weights << std::to_string(outputLayerWeights[i][j]) << ",";
+			file3Weights << std::to_string(outputLayerWeights[i][j]);
+			if (j < thirdLayerValues.size() - 1) file3Weights << ",";
 		}
 		file3Weights << "\n";
-		file3Biases << std::to_string(outputLayerBias[i]) << ",";
+		file3Biases << std::to_string(outputLayerBias[i]);
+		if (i < outputLayerValues.size() - 1) file3Biases << ",";
 	}
 	file1Weights.close();
 	file2Weights.close();

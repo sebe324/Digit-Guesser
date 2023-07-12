@@ -29,7 +29,7 @@ In the result section, the network will output (hopefully) the drawn digit.
   - Calculating all the weights, values and biases 🛠️
   - Setting random values to each weight ✔️
   - Loading learning data from images :x:
-  - Loading and saving weights to a csv file 🛠️
+  - Loading and saving weights to a csv file ✔️
   - Network learning :x:
 - Misc 🛠️
 	- Organize code better 🛠️
