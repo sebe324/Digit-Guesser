@@ -1,11 +1,11 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
-#include "DrawingBoard.h"
-#include "Button.h"
+#include "GUI/DrawingBoard.h"
+#include "GUI/Button.h"
 #include <string>
-#include "NeuralNetwork.h"
+#include "NeuralNetwork/NeuralNetwork.h"
 #include <ctime>
-#include "ProgressBar.h"
+#include "GUI/ProgressBar.h"
 
 Button createButton(const std::string& text, unsigned charSize, const sf::Vector2f& position, const sf::Vector2f& size, const sf::Font& font)
 {

@@ -3,7 +3,7 @@
 #include <vector>
 #include <fstream>
 #include <SFML/Graphics.hpp>
-#include "Utils.h"
+#include "../Other/Utils.h"
 #include <iostream>
 class NeuralNetwork
 {

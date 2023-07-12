@@ -2,7 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <vector>
-#include "Utils.h"
+#include "../Other/Utils.h"
 //Drawing board that let's the user draw the digit.
 
 enum Mode
