@@ -5,6 +5,18 @@
 #include <string>
 #include "NeuralNetwork.h"
 #include <ctime>
+#include "ProgressBar.h"
+
+Button createButton(const std::string& text, unsigned charSize, const sf::Vector2f& position, const sf::Vector2f& size, const sf::Font& font)
+{
+	Button b(text, charSize, sf::Color::White, position, size, sf::Color::Black, font);
+	b.hoverBodyColor = sf::Color(50, 50, 50);
+	b.body.setOutlineColor(sf::Color::White);
+	b.body.setOutlineThickness(2);
+
+	return b;
+}
+
 int main()
 {
 	srand(time(NULL));
@@ -15,61 +27,54 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "Number Guesser",sf::Style::Close | sf::Style::Resize,settings);
 	window.setFramerateLimit(60);
 
-	DrawingBoard drawingBoard(28, 28, 15,150, 200);
+	DrawingBoard drawingBoard(28, 28, 15,100, 200);
 	drawingBoard.updateCells();
 	sf::Vector2f mousePos;
 
 	sf::Font font;
+
+
 	if (!font.loadFromFile("font.ttf")) return -1;
+	
 
-	sf::Text title;
-	title.setFont(font);
+
+	sf::Text title("Digit Guesser",font,40);
 	title.setFillColor(sf::Color::White);
-	title.setString("Digit Guesser");
 	title.setPosition(sf::Vector2f((windowWidth-title.getGlobalBounds().width)/2,50));
-	title.setCharacterSize(40);
 
-	sf::Text brushSizeLabel;
-	brushSizeLabel.setFont(font);
+	sf::Text brushSizeLabel("Brush Size: ", font, 30);
 	brushSizeLabel.setFillColor(sf::Color::White);
-	brushSizeLabel.setString("Brush Size: ");
-	brushSizeLabel.setPosition(sf::Vector2f(150,650));
+	brushSizeLabel.setPosition(sf::Vector2f(100,650));
 
-	sf::Text brushSizeValue;
-	brushSizeValue.setFont(font);
+	sf::Text brushSizeValue(std::to_string(drawingBoard.brushSize),font,30);
 	brushSizeValue.setFillColor(sf::Color::White);
-	brushSizeValue.setString(std::to_string(drawingBoard.brushSize));
-	brushSizeValue.setPosition(sf::Vector2f(470,650));
-	Button buttonBrushSizeInc("+", 40, sf::Color::White, sf::Vector2f(384, 650), sf::Vector2f(50, 50), sf::Color::Black, font);
-	Button buttonBrushSizeDec("-", 40, sf::Color::White, sf::Vector2f(524, 650), sf::Vector2f(50, 50), sf::Color::Black, font);
-	buttonBrushSizeInc.hoverBodyColor = sf::Color(50, 50, 50);
-	buttonBrushSizeDec.hoverBodyColor = sf::Color(50, 50, 50);
-	buttonBrushSizeInc.body.setOutlineThickness(2);
-	buttonBrushSizeInc.body.setOutlineColor(sf::Color::White);
-	buttonBrushSizeDec.body.setOutlineThickness(2);
-	buttonBrushSizeDec.body.setOutlineColor(sf::Color::White);
+	brushSizeValue.setPosition(sf::Vector2f(420,650));
 
-	Button buttonStartPerceptron("START", 40, sf::Color::White, sf::Vector2f(640, 320), sf::Vector2f(180, 50), sf::Color::Black, font);
-	buttonStartPerceptron.hoverBodyColor = sf::Color(50, 50, 50);
-	buttonStartPerceptron.body.setOutlineThickness(2);
-	buttonStartPerceptron.body.setOutlineColor(sf::Color::White);
+	Button buttonBrushSizeInc = createButton("+", 40, sf::Vector2f(324, 650), sf::Vector2f(50, 50), font);
 
-	Button buttonClearBoard("Clear board", 30, sf::Color::White, sf::Vector2f(270, 133), sf::Vector2f(303, 60), sf::Color::Black, font);
-	buttonClearBoard.hoverBodyColor = sf::Color(50, 50, 50);
-	buttonClearBoard.body.setOutlineThickness(2);
-	buttonClearBoard.body.setOutlineColor(sf::Color::White);
+	Button buttonBrushSizeDec = createButton("-", 40, sf::Vector2f(474, 650), sf::Vector2f(50, 50), font);
 
 
-	Button buttonWriteMode("", 0, sf::Color::White, sf::Vector2f(208, 133), sf::Vector2f(60, 60), sf::Color::Black, font);
+	Button buttonStartPerceptron = createButton("START", 35, sf::Vector2f(575, 320), sf::Vector2f(180, 50), font);
+
+
+	Button buttonClearBoard = createButton("Clear board", 30, sf::Vector2f(220, 133), sf::Vector2f(303, 60), font);
+
+
+	Button buttonWriteMode = createButton("", 0, sf::Vector2f(157, 133), sf::Vector2f(60, 60), font);
 	buttonWriteMode.setSprite("pencil.png", sf::Vector2f(0.1,0.1));
-	buttonWriteMode.body.setOutlineThickness(2);
-	buttonWriteMode.body.setOutlineColor(sf::Color::White);
-	buttonWriteMode.hoverBodyColor = sf::Color(50, 50, 50);
-	Button buttonEraseMode("", 0, sf::Color::White, sf::Vector2f(148, 133), sf::Vector2f(60, 60), sf::Color::Black, font);
-	buttonEraseMode.body.setOutlineThickness(2);
-	buttonEraseMode.body.setOutlineColor(sf::Color::White);
+
+	Button buttonEraseMode = createButton("", 0, sf::Vector2f(97, 133), sf::Vector2f(60, 60), font);
 	buttonEraseMode.setSprite("rubber.png", sf::Vector2f(0.1, 0.1));
-	buttonEraseMode.hoverBodyColor = sf::Color(50, 50, 50);
+
+	std::vector<ProgressBar> progressBars(10);
+
+	for (int i = 0; i < progressBars.size(); i++) {
+		progressBars[i] = ProgressBar(sf::Vector2f(835, 133 + i * 57), sf::Vector2f(200, 50), sf::Color(30, 30, 30), sf::Color::White, 1.0,font);
+		progressBars[i].background.setOutlineColor(sf::Color::White);
+		progressBars[i].background.setOutlineThickness(2);
+		progressBars[i].setLabel(std::to_string(i));
+	}
 	sf::Clock clock;
 	sf::Time deltaTime = sf::seconds(0.016);
 
@@ -112,8 +117,9 @@ int main()
 				}
 				else if (buttonStartPerceptron.click(mousePos)) {
 					perceptron.loadInput(drawingBoard.getValuesFrom0To1());
-					std::cout<<"Cost: "<<perceptron.calculateCost(1) << std::endl;
-					for (auto& x : perceptron.outputLayerValues) std::cout << x << std::endl;
+					perceptron.launchNetwork();
+
+					for (int i = 0; i < progressBars.size(); i++) progressBars[i].setValue(perceptron.outputLayerValues[i]);
 				}
 			}
 		}
@@ -125,6 +131,7 @@ int main()
 		buttonWriteMode.update(mousePos, deltaTime);
 		buttonEraseMode.update(mousePos, deltaTime);
 
+		for (auto& x : progressBars) x.update(deltaTime);
 		window.clear();
 		window.draw(drawingBoard);
 		window.draw(buttonBrushSizeInc);
@@ -136,6 +143,8 @@ int main()
 		window.draw(brushSizeValue);
 		window.draw(buttonWriteMode);
 		window.draw(buttonEraseMode);
+
+		for (auto& x : progressBars) window.draw(x);
 		window.display();
 		deltaTime = clock.restart();
 	}
