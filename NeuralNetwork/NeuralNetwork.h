@@ -39,6 +39,7 @@ public:
 	void saveWeightsAndBiases(const std::string& f1w, const std::string& f2w, const std::string& f3w, const std::string& f1b, const std::string& f2b, const std::string& f3b);
 
 
+	void learn(const std::string& learningBatchFileName);
 	void createLearningBatches();
 
 	//randomizes weights and biases

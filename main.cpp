@@ -85,13 +85,13 @@ int main()
 	//Just a test to check if data is loaded properly
 	
 	
-	/*std::vector<unsigned char> test = perceptron.loadImage("LearningBatches\\batch1");
+	/*std::vector<unsigned char> test = perceptron.loadData("LearningBatches\\batch99");
 	for(int i = 0; i < 784; i++) {
 		drawingBoard.values[i] = test[i+784*0];
 	}
-	std::vector<unsigned char> test2 = perceptron.loadImage("trainingData\\data0");
+	std::vector<unsigned char> test2 = perceptron.loadData("trainingData\\data0");
 	for (int i = 0; i < 784; i++) {
-		drawingBoard.values[i] = test2[i + 784 * 10];
+		//drawingBoard.values[i] = test2[i + 784 * 990];
 	}
 	drawingBoard.updateCells();*/
 

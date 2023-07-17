@@ -73,6 +73,10 @@ double NeuralNetwork::calculateCost(unsigned selected) {
 	return cost;
 }
 
+void NeuralNetwork::learn(const std::string& learningBatchFileName)
+{
+	//??????
+}
 void NeuralNetwork::randomize()
 {
 	for (auto& w : secondLayerWeights)
