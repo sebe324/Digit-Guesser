@@ -12,6 +12,10 @@ double Utils::sigmoid(double n)
 	return (n / (1 + abs(n))+1)/2;
 }
 
+double Utils::sigmoid_derivative(double n)
+{
+	return 2 / ((2 + 2 * abs(n)) * (2 + 2 * abs(n)));
+}
 double Utils::rand_double(double min, double max)
 {
 	double f = (double)rand() / RAND_MAX;

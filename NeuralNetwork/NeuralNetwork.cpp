@@ -178,7 +178,6 @@ void NeuralNetwork::saveWeightsAndBiases
 		if (i < secondLayerValues.size() - 1) file1Biases << ",";
 	}
 
-	std::cout << "TEST: " << count << std::endl;
 	for (int i = 0; i < thirdLayerValues.size(); i++) {
 		for (int j = 0; j < secondLayerValues.size(); j++) {
 			file2Weights << std::to_string(thirdLayerWeights[i][j]);
@@ -208,7 +207,41 @@ void NeuralNetwork::saveWeightsAndBiases
 	file3Biases.close();
 }
 
-void NeuralNetwork::loadImage(const std::string& fileName)
+std::vector<unsigned char> NeuralNetwork::loadData(const std::string& fileName)
 {
+	std::ifstream input(fileName, std::ios::binary);
+	std::vector<unsigned char> buffer(std::istreambuf_iterator<char>(input), {});
+	input.close();
+	std::cout << "MADE IT" << std::endl;
+	return buffer;
+}
 
+void NeuralNetwork::createLearningBatches()
+{
+	std::vector<std::vector<unsigned char>> v(10);
+	v[0] = loadData("TrainingData\\data0");
+	v[1] = loadData("TrainingData\\data1");
+	v[2] = loadData("TrainingData\\data2");
+	v[3] = loadData("TrainingData\\data3");
+	v[4] = loadData("TrainingData\\data4");
+	v[5] = loadData("TrainingData\\data5");
+	v[6] = loadData("TrainingData\\data6");
+	v[7] = loadData("TrainingData\\data7");
+	v[8] = loadData("TrainingData\\data8");
+	v[9] = loadData("TrainingData\\data9");
+	for (int i = 0; i < 100; i++)
+	{
+		std::ofstream batch("LearningBatches\\batch" + std::to_string(i), std::ios::binary);
+		std::ofstream label("LearningBatches\\label" + std::to_string(i), std::ios::binary);
+		std::vector<unsigned char> tmp(100*784);
+		for (int j = 0; j < 10; j++) {
+			for (unsigned char k = 0; k < 10; k++) {
+				memcpy(tmp.data() + j * 10 * 784 + k * 784, v[k].data() + i * 784 * 10 + j * 784, 784);
+				label.write(reinterpret_cast<char*>(&k), sizeof(k));
+			}
+		}
+		batch.write(reinterpret_cast<char*>(&tmp[0]), sizeof(unsigned char) * tmp.size());
+		batch.close();
+		label.close();
+	}
 }

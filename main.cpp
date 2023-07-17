@@ -19,7 +19,7 @@ Button createButton(const std::string& text, unsigned charSize, const sf::Vector
 
 int main()
 {
-	srand(42069);
+	srand(42069); //funny
 
 	const int windowWidth=1200;
 	const int windowHeight=800;
@@ -81,7 +81,22 @@ int main()
 	NeuralNetwork perceptron(784, 16, 16, 10);
 	perceptron.randomize();
 	perceptron.saveWeightsAndBiases("weights2.csv", "weights3.csv", "weights4.csv", "biases2.csv","biases3.csv","biases4.csv");
+	
+	//Just a test to check if data is loaded properly
+	
+	
+	/*std::vector<unsigned char> test = perceptron.loadImage("LearningBatches\\batch1");
+	for(int i = 0; i < 784; i++) {
+		drawingBoard.values[i] = test[i+784*0];
+	}
+	std::vector<unsigned char> test2 = perceptron.loadImage("trainingData\\data0");
+	for (int i = 0; i < 784; i++) {
+		drawingBoard.values[i] = test2[i + 784 * 10];
+	}
+	drawingBoard.updateCells();*/
 
+	//perceptron.createLearningBatches();
+	
 	perceptron.loadWeightsAndBiases("weights2.csv", "weights3.csv", "weights4.csv", "biases2.csv", "biases3.csv", "biases4.csv");
 	while (window.isOpen())
 	{
