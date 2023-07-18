@@ -7,7 +7,8 @@ A multilayer perceptron that can detect single digits.
 
 
 ## Project status
-W.I.P
+I'm going to finish this project later, when I get a better grasp of neural networks.
+
 The user can draw digits, but the network isn't working properly yet.
 ## How to use
 
