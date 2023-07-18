@@ -19,15 +19,14 @@ Button createButton(const std::string& text, unsigned charSize, const sf::Vector
 
 int main()
 {
-	srand(42069); //funny
+	srand(1234567); //funny
 
-	const int windowWidth=1200;
-	const int windowHeight=800;
-	sf::ContextSettings settings(0,0,4);
-	sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "Number Guesser",sf::Style::Close | sf::Style::Resize,settings);
+	const int windowWidth = 1200;
+	const int windowHeight = 800;
+	sf::ContextSettings settings(0, 0, 4);
+	sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "Number Guesser", sf::Style::Close | sf::Style::Resize, settings);
 	window.setFramerateLimit(60);
-
-	DrawingBoard drawingBoard(28, 28, 15,100, 200);
+	DrawingBoard drawingBoard(28, 28, 15, 100, 200);
 	drawingBoard.updateCells();
 	sf::Vector2f mousePos;
 
@@ -35,20 +34,20 @@ int main()
 
 
 	if (!font.loadFromFile("font.ttf")) return -1;
-	
 
 
-	sf::Text title("Digit Guesser",font,40);
+
+	sf::Text title("Digit Guesser", font, 40);
 	title.setFillColor(sf::Color::White);
-	title.setPosition(sf::Vector2f((windowWidth-title.getGlobalBounds().width)/2,50));
+	title.setPosition(sf::Vector2f((windowWidth - title.getGlobalBounds().width) / 2, 50));
 
-	sf::Text brushSizeLabel("Brush Size: ", font, 30);
+	sf::Text brushSizeLabel("Brush size: ", font, 30);
 	brushSizeLabel.setFillColor(sf::Color::White);
-	brushSizeLabel.setPosition(sf::Vector2f(100,650));
+	brushSizeLabel.setPosition(sf::Vector2f(100, 650));
 
-	sf::Text brushSizeValue(std::to_string(drawingBoard.brushSize),font,30);
+	sf::Text brushSizeValue(std::to_string(drawingBoard.brushSize), font, 30);
 	brushSizeValue.setFillColor(sf::Color::White);
-	brushSizeValue.setPosition(sf::Vector2f(420,650));
+	brushSizeValue.setPosition(sf::Vector2f(420, 650));
 
 	Button buttonBrushSizeInc = createButton("+", 40, sf::Vector2f(324, 650), sf::Vector2f(50, 50), font);
 
@@ -62,7 +61,7 @@ int main()
 
 
 	Button buttonWriteMode = createButton("", 0, sf::Vector2f(157, 133), sf::Vector2f(60, 60), font);
-	buttonWriteMode.setSprite("pencil.png", sf::Vector2f(0.1,0.1));
+	buttonWriteMode.setSprite("pencil.png", sf::Vector2f(0.1, 0.1));
 
 	Button buttonEraseMode = createButton("", 0, sf::Vector2f(97, 133), sf::Vector2f(60, 60), font);
 	buttonEraseMode.setSprite("rubber.png", sf::Vector2f(0.1, 0.1));
@@ -70,7 +69,7 @@ int main()
 	std::vector<ProgressBar> progressBars(10);
 
 	for (int i = 0; i < progressBars.size(); i++) {
-		progressBars[i] = ProgressBar(sf::Vector2f(835, 133 + i * 57), sf::Vector2f(200, 50), sf::Color(30, 30, 30), sf::Color::White, 1.0,font);
+		progressBars[i] = ProgressBar(sf::Vector2f(835, 133 + i * 57), sf::Vector2f(200, 50), sf::Color(30, 30, 30), sf::Color::White, 1.0, font);
 		progressBars[i].background.setOutlineColor(sf::Color::White);
 		progressBars[i].background.setOutlineThickness(2);
 		progressBars[i].setLabel(std::to_string(i));
@@ -78,26 +77,50 @@ int main()
 	sf::Clock clock;
 	sf::Time deltaTime = sf::seconds(0.016);
 
-	NeuralNetwork perceptron(784, 16, 16, 10);
-	perceptron.randomize();
-	perceptron.saveWeightsAndBiases("weights2.csv", "weights3.csv", "weights4.csv", "biases2.csv","biases3.csv","biases4.csv");
-	
-	//Just a test to check if data is loaded properly
-	
-	
-	/*std::vector<unsigned char> test = perceptron.loadData("LearningBatches\\batch99");
-	for(int i = 0; i < 784; i++) {
-		drawingBoard.values[i] = test[i+784*0];
-	}
-	std::vector<unsigned char> test2 = perceptron.loadData("trainingData\\data0");
-	for (int i = 0; i < 784; i++) {
-		//drawingBoard.values[i] = test2[i + 784 * 990];
-	}
-	drawingBoard.updateCells();*/
+	std::vector<unsigned> topology = { 784,100,100,50,10 };
+	NeuralNetwork perceptron(topology);
+	perceptron.saveWeights(std::vector<std::string>({ "weights1.csv","weights2.csv","weights3.csv","weights4.csv" }));
+	perceptron.loadWeights(std::vector<std::string>({ "weights1.csv","weights2.csv","weights3.csv","weights4.csv" }));
 
-	//perceptron.createLearningBatches();
-	
-	perceptron.loadWeightsAndBiases("weights2.csv", "weights3.csv", "weights4.csv", "biases2.csv", "biases3.csv", "biases4.csv");
+	std::vector<std::vector<unsigned char>> data = perceptron.loadTrainingData("LearningBatch\\data", 10000);
+	std::vector<std::vector<double>> squishedData(10000, std::vector<double>(784));
+	std::vector<std::vector<double>> targetValues = perceptron.getTargetValues("LearningBatch\\labels", 10000);
+	//squish the data between 0 and 1
+	for (int i = 0; i < 10000; i++) {
+		for (int j = 0; j < 784; j++) {
+			if (data[i][j] > 0) squishedData[i][j] = 1.0;
+			else squishedData[i][j] = 0.0;
+		}
+	}
+	drawingBoard.updateCells();
+
+	std::ofstream file("results.txt");
+	file.clear();
+	file << "LEARNING BEGINS" << std::endl;
+	unsigned iteration = 0;
+	std::vector<double> results;
+	for (int i = 0; i < 10000; i++) {
+		std::cout << "iteration: " << iteration << std::endl;
+		file << "iteration: " << iteration++ << std::endl;
+		file << "Target values: " << std::endl;
+		for (int j = 0; j < 10; j++) file << targetValues[i][j] << " ";
+		file << '\n';
+		perceptron.feedForward(squishedData[i]);
+		perceptron.backpropagate(targetValues[i]);
+		perceptron.getResults(results);
+		file << "Actual values: " << std::endl;
+		for (int j = 0; j < 10; j++) file << results[j]<<" ";
+		file << std::endl;
+		file << "recent average error: "
+			<< perceptron.m_recentAverageError << std::endl;
+		std::cout << "recent average error: "
+			<< perceptron.m_recentAverageError << std::endl;
+		file << "cost : " << perceptron.m_error << std::endl;
+		std::cout << "cost : " << perceptron.m_error << std::endl;
+	}
+	file.close();
+	perceptron.saveWeights(std::vector<std::string>({ "weights1.csv","weights2.csv","weights3.csv","weights4.csv" }));
+	//perceptron.createLearningBatch("LearningBatch\\data", "LearningBatch\\labels");
 	while (window.isOpen())
 	{
 		sf::Event event;
@@ -133,9 +156,10 @@ int main()
 					drawingBoard.clear();
 				}
 				else if (buttonStartPerceptron.click(mousePos)) {
-					perceptron.loadInput(drawingBoard.getValuesFrom0To1());
-					perceptron.launchNetwork();
-					for (int i = 0; i < progressBars.size(); i++) progressBars[i].setValue(perceptron.outputLayerValues[i]);
+					perceptron.feedForward(drawingBoard.getValuesFrom0To1());
+					std::vector<double> values;
+					perceptron.getResults(values);
+					for (int i = 0; i < progressBars.size(); i++) progressBars[i].setValue(values[i]);
 				}
 			}
 		}

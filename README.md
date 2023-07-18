@@ -32,9 +32,9 @@ In the result section, the network will output (hopefully) the drawn digit.
 - Neural Network 🛠️
   - Calculating all the weights, values and biases ✔️
   - Setting random values to each weight ✔️
-  - Loading data from binary training files ✔️
-  - Created batches of 100 images for learning ✔️
-  - Loading and saving weights to a csv file ✔️
+  - Loading data from binary training files 🛠️
+  - Created batches of 100 images for learning 🛠️
+  - Loading and saving weights to a csv file 🛠️
   - Network learning :x:
 - Misc 🛠️
 	- Organize code better 🛠️

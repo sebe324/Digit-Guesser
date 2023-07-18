@@ -6,44 +6,35 @@
 #include "../Other/Utils.h"
 #include <iostream>
 #include <stdio.h>
+#include "Neuron.h"
+#include <cassert>
+
+typedef std::vector<Neuron> Layer;
+
 class NeuralNetwork
 {
 public:
-	std::vector<double> inputLayerValues;
-	std::vector<double> secondLayerValues;
-	std::vector<double> thirdLayerValues;
-	std::vector<double> outputLayerValues;
-
-	std::vector<std::vector<double>> secondLayerWeights;
-	std::vector<std::vector<double>> thirdLayerWeights;
-	std::vector<std::vector<double>> outputLayerWeights;
-
-	std::vector<double> secondLayerBias;
-	std::vector<double> thirdLayerBias;
-	std::vector<double> outputLayerBias;
-
-	double learningRate = 0.01;
-
-	NeuralNetwork(unsigned inputLayerSize, unsigned secondLayerSize, unsigned thirdLayerSize, unsigned outputLayerSize);
-
-	void loadInput(const std::vector<double>& input);
-
-	void launchNetwork(); 
-
-	double calculateCost(unsigned selected);
-
-	std::vector<unsigned char> loadData(const std::string& fileName);
-
-	void loadWeightsAndBiases(const std::string& f1w, const std::string& f2w, const std::string& f3w, const std::string& f1b, const std::string& f2b, const std::string& f3b);
-
-	void saveWeightsAndBiases(const std::string& f1w, const std::string& f2w, const std::string& f3w, const std::string& f1b, const std::string& f2b, const std::string& f3b);
 
 
-	void learn(const std::string& learningBatchFileName);
-	void createLearningBatches();
+	NeuralNetwork(const std::vector<unsigned>& topology);
 
-	//randomizes weights and biases
-	void randomize();
+	void feedForward(const std::vector<double>& inputValues);
+	void backpropagate(const std::vector<double>& targetValues);
+	void getResults(std::vector<double>& resultVals) const;
 
+	void loadWeights(const std::vector<std::string>& fileNames);
+	void saveWeights(const std::vector<std::string>& fileNames) const;
+	void createLearningBatch(const std::string& fileName, const std::string& labelFileName);
+	std::vector<std::vector<unsigned char>> loadTrainingData(const std::string& fileName, unsigned amount);
+	std::vector<std::vector<double>> getTargetValues(const std::string& labelFileName, unsigned amount);
 
+	double m_recentAverageError;
+	double m_error;
+private:
+
+	std::vector<Layer> m_layers;
+	Layer& m_inputLayer;
+	Layer& m_outputLayer;
+	double m_recentAverageSmoothingFactor;
+	double calculateRMS(const std::vector<double>& targetVals) const;
 };
